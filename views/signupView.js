@@ -1,26 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { TouchableOpacity, SafeAreaView, View, TextInput, Button, StyleSheet, Text } from "react-native";
-import CustomButton from "./components/CustomButton";
-// view is like div (a container)
-//
+import axios from "axios";
+import {
+  TouchableOpacity,
+  SafeAreaView,
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  Text,
+} from "react-native";
+import CustomButton from "../components/CustomButton";
 
 
-export default function App() {
+export default function signupView() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    // Perform login logic here, e.g., sending credentials to a server
-    console.log("Username:", username);
-    console.log("Password:", password);
-    // Reset the input fields
-    setUsername("");
-    setPassword("");
-  };
-  const handleSignup = () => {
-    // Send user to SignupView
-  }
+   const handleSignup = async () => {
+     try {
+       const response = await axios.post("http://localhost:5000/users", {
+         username,
+         password,
+       });
+       console.log(response.data.message); // Display the response message
+     } catch (error) {
+       console.error(error.response.data.message); // Display the error message
+     }
+   };
+    
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}> WithMe </Text>
