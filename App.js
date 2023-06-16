@@ -1,69 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useState } from "react";
-import { TouchableOpacity, SafeAreaView, View, TextInput, Button, StyleSheet, Text } from "react-native";
-import CustomButton from "./components/CustomButton";
-// view is like div (a container)
-//
+import Login from "./views/LoginView";
+import Signup from "./views/SignupView";
+//import ThirdScreen from "./screens/ThirdScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleLogin = () => {
-    // Perform login logic here, e.g., sending credentials to a server
-    console.log("Username:", username);
-    console.log("Password:", password);
-    // Reset the input fields
-    setUsername("");
-    setPassword("");
-  };
-  const handleSignup = () => {
-    // Send user to SignupView
-  }
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}> WithMe </Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Username"
-        value={username}
-        onChangeText={(text) => setUsername(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-      />
-      <CustomButton title="Login" onPress={handleLogin} />
-      <CustomButton title="Sign up" onPress={handleSignup} />
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          //options={{ title: "Welcome" }}
+        />
+        <Stack.Screen name="Signup" component={Signup} />
+        {/* <Stack.Screen
+          name="Third"
+          component={ThirdScreen}
+          options={{ headerShown: false }}
+        /> */}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  title: {
-    fontSize: "90",
-    backgroundColor: "white",
-    justifyContent: "center",
-    padding: 16,
-  },
-  container: {
-    backgroundColor: "white",
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 16,
-  },
-  input: {
-    width: "90%",
-    height: 40,
-    color: "white",
-    borderColor: "gray",
-    borderWidth: 1,
-    marginBottom: 16,
-    paddingHorizontal: 8,
-  },
-});
